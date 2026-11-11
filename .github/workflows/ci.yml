@@ -10,9 +10,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: B/CHELSONCLYDEKHALIL_LAUD/laud_unit7_assignment
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
