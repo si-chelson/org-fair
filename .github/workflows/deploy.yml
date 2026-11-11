@@ -8,8 +8,6 @@
 name: Deploy to GitHub Pages
 
 on:
-  # TODO C1: run on every push to the main branch, and also by hand
-  # (workflow_dispatch:).
   push:
     branches: [main]
   workflow_dispatch:
@@ -37,14 +35,9 @@ jobs:
       # A failing test stops the job here: nothing is deployed.
       - run: flutter test
       - name: Build the web app
-        # TODO C2: GitHub Pages serves the site from /<repository name>/,
-        # so add --base-href "/${{ github.event.repository.name }}/".
-        # Then pass each CMS value with --dart-define, for example
-        #   --dart-define=CMS=${{ vars.CMS }}
-        #   --dart-define=CMS_TOKEN=${{ secrets.CMS_TOKEN }}
         run: >-
           flutter build web --release
-          --base-href "/org-fair/"
+          --base-href "/${{ github.event.repository.name }}/"
           --dart-define=CMS=${{ vars.CMS }}
           --dart-define=CMS_URL=${{ vars.CMS_URL }}
           --dart-define=CMS_SPACE=${{ vars.CMS_SPACE }}
@@ -53,7 +46,7 @@ jobs:
           --dart-define=CMS_TOKEN=${{ secrets.CMS_TOKEN }}
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: B/CHELSONCLYDEKHALIL_LAUD/laud_unit7_assignment/build/web
+          path: build/web
 
   deploy:
     needs: build
